@@ -16,8 +16,8 @@
 # along with Autosubmit.  If not, see <http://www.gnu.org/licenses/>.
 
 import pytest
-from portalocker.exceptions import BaseLockException
 
+from autosubmit.exceptions import ExperimentAlreadyLockedException
 from autosubmit.log.log import AutosubmitCritical, AutosubmitError
 from autosubmit.scripts._args import exit_from_error
 
@@ -51,7 +51,7 @@ def test_exit_from_error_handles_trace_logging_failure(mocker):
             False,
         ),
         (
-            BaseLockException(),
+            ExperimentAlreadyLockedException(),
             1,
             1,
             True,
@@ -109,7 +109,7 @@ def test_exit_from_error_logs_autosubmit_critical_trace(mocker):
 
 def test_exit_from_error_logs_portalocker_warning(mocker):
     """Warn about an experiment lock when a portalocker error occurs."""
-    exception = BaseLockException()
+    exception = ExperimentAlreadyLockedException()
 
     mocked_log = mocker.patch("autosubmit.scripts._args.Log")
 
